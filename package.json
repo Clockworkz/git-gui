@@ -1,0 +1,19 @@
+{
+  "name": "gui-git",
+  "version": "1.0.0",
+  "main": "app/main.js",
+  "scripts": {
+    "test": "jest",
+    "start": "./node_modules/.bin/electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "electron": "^1.6.11"
+  },
+  "devDependencies": {
+    "eslint": "^4.1.1",
+    "jest": "^20.0.4"
+  }
+}
