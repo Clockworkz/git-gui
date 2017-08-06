@@ -7,7 +7,7 @@ module.exports = {
         console.log("running " + command + " in " + path);
         let cmd = exec(command, {cwd: path}, (err, stdout, stderr) => {
             if (err) {
-                console.log(err)
+                console.log(err, null);
             }
             if (stdout) {
                 console.log(stdout);
@@ -56,6 +56,20 @@ module.exports = {
     },
 
     status(args, callback) {
-        let status = this.runCommand("git status", () => {});
+        let status = this.runCommand("git status", (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log(data);
+        });
+    },
+
+    commit(message, callback) {
+        let commit = this.runCommand("git commit -m" + '"' + message + '"', (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log(data);
+        });
     }
 }

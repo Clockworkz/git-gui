@@ -9,35 +9,35 @@ function initButtons() {
     var commitButton = document.querySelector("#git-commit");
 
     addButton.onclick = function () {
-        gitOps.add(".", function(err, data) {
+        gitOps.add(document.querySelector("#git-add-path").value, function(err, data) {
             if (err) console.log(err);
             console.log(data);
         });
     };
 
     statusButton.onclick = function () {
-        gitOps.status(".", function(err, data) {
+        gitOps.status([], function(err, data) {
             if (err) console.log(err);
             console.log(data);
         });
     };
 
     pushButton.onclick = function () {
-        gitOps.push(".", function(err, data) {
+        gitOps.push([], function(err, data) {
             if (err) console.log(err);
             console.log(data);
         });
     };
 
     pullButton.onclick = function () {
-        gitOps.pull(".", function(err, data) {
+        gitOps.pull([], function(err, data) {
             if (err) console.log(err);
             console.log(data);
         });
     };
 
     cloneButton.onclick = function () {
-        gitOps.clone(".", function(err, data) {
+        gitOps.clone(document.querySelector("git-clone-url").value, function(err, data) {
             if (err) console.log(err);
             console.log(data);
         });
