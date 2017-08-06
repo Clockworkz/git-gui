@@ -37,8 +37,8 @@ module.exports = {
         });
     },
 
-    push(args, callback) {
-        let push = this.runCommand("git push", (err, data) => {
+    push(branch, tag, callback) {
+        let push = this.runCommand(`git push -u origin ${branch}:${tag}`, (err, data) => {
             if (err) {
                 console.log(err);
             }

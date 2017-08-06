@@ -23,7 +23,7 @@ function initButtons() {
     };
 
     pushButton.onclick = function () {
-        gitOps.push([], function(err, data) {
+        gitOps.push("master", "master", function(err, data) {
             if (err) console.log(err);
             console.log(data);
         });
