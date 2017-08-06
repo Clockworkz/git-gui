@@ -1,12 +1,21 @@
 var gitOps = require("../core/git-ops");
 
 function initButtons() {
+    var projectButton = document.querySelector("#project-submit");
     var addButton = document.querySelector("#git-add");
     var statusButton = document.querySelector("#git-status");
     var pushButton = document.querySelector("#git-push");
     var pullButton = document.querySelector("#git-pull");
     var cloneButton = document.querySelector("#git-clone");
     var commitButton = document.querySelector("#git-commit");
+
+    projectButton.onclick = function(){
+        gitOps.projectDir(document.querySelector("#project-path").value).then( () => {
+            //
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
 
     addButton.onclick = function () {
         gitOps.add(document.querySelector("#git-add-path").value, function(err, data) {
