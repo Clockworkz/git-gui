@@ -3,73 +3,58 @@ const path = require('path').dirname(require.main.filename)
 const process = require("process");
 
 module.exports = {
-    runCommand(command, callback) {
-        console.log("running " + command + " in " + path);
-        let cmd = exec(command, {cwd: path}, (err, stdout, stderr) => {
-            if (err) {
-                console.log(err, null);
-            }
-            if (stdout) {
-                console.log(stdout);
-            }
-            if (stderr) {
-                console.log(stderr);
-            }
-            callback(null, stdout);
+    runCommand(command) {
+        return new Promise( (resolve, reject) => {
+            console.log("running " + command + " in " + path);
+            let cmd = exec(command, {cwd: path}, (err, stdout, stderr) => {
+                if (err) {
+                    reject(err);
+                }
+                if (stdout) {
+                    console.log(stdout);
+                }
+                if (stderr) {
+                    console.log(stderr);
+                    reject(err);
+                }
+                resolve(stdout);
+            });
         });
     },
 
-    clone(url, callback) {
-        let clone = this.runCommand("git clone " + url, (err, data) => {
-            if (err) {
-                console.log(err);
+    projectDir(dir) {
+        return new Promise( (resolve, reject) => {
+            try{
+                process.chdir(dir);
+                resolve();
             }
-            console.log(data);
+            catch(err){
+                reject(err);
+            }
         });
     },
 
-    add(filename, callback) {
-        let add = this.runCommand("git add "+ filename, (err, data) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(data);
-        });
+    clone(url) {
+        return this.runCommand("git clone " + url);
     },
 
-    push(branch, tag, callback) {
-        let push = this.runCommand(`git push -u origin ${branch}:${tag}`, (err, data) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(data);
-        });
+    add(filename) {
+        return this.runCommand("git add "+ filename);
     },
 
-    pull(args, callback) {
-        let pull = this.runCommand("git pull", (err, data) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(data);
-        });
+    push(branch, tag) {
+        return this.runCommand(`git push -u origin ${branch}:${tag}`);
     },
 
-    status(args, callback) {
-        let status = this.runCommand("git status", (err, data) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(data);
-        });
+    pull(args) {
+        return this.runCommand("git pull");
     },
 
-    commit(message, callback) {
-        let commit = this.runCommand("git commit -m" + '"' + message + '"', (err, data) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(data);
-        });
+    status(args) {
+        return this.runCommand("git status");
+    },
+
+    commit(message) {
+        return this.runCommand("git commit -m" + '"' + message + '"');
     }
-}
+};
