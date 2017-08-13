@@ -2,12 +2,22 @@ var gitOps = require("../core/git-ops");
 
 function initButtons() {
     var projectButton = document.querySelector("#project-submit");
+    var loginButton = document.querySelector("#login");
     var addButton = document.querySelector("#git-add");
     var statusButton = document.querySelector("#git-status");
     var pushButton = document.querySelector("#git-push");
     var pullButton = document.querySelector("#git-pull");
     var cloneButton = document.querySelector("#git-clone");
     var commitButton = document.querySelector("#git-commit");
+
+    loginButton.onclick = function() {
+        gitOps.login(document.querySelector("#login-user").value, document.querySelector("#login-pass").value)
+        .then( (data) => {
+            //
+        }).catch( (err) => {
+            //
+        });
+    };
 
     projectButton.onclick = function(){
         gitOps.projectDir(document.querySelector("#project-path").value).then( () => {
@@ -32,9 +42,10 @@ function initButtons() {
     };
 
     pushButton.onclick = function () {
-        gitOps.push("master", "master", function(err, data) {
-            if (err) console.log(err);
+        gitOps.push("master","master").then( (data) => {
             console.log(data);
+        }).catch( (err) => {
+            console.log(err);
         });
     };
 

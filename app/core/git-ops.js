@@ -2,6 +2,8 @@ const exec = require("child_process").exec;
 const path = require('path').dirname(require.main.filename)
 const process = require("process");
 
+var user, pass;
+
 module.exports = {
     runCommand(command) {
         return new Promise( (resolve, reject) => {
@@ -20,6 +22,11 @@ module.exports = {
                 resolve(stdout);
             });
         });
+    },
+
+    login(username, password) {
+        user = username;
+        pass = password;
     },
 
     projectDir(dir) {
